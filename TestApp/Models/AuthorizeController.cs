@@ -7,18 +7,24 @@ using System.Threading.Tasks;
 
 namespace TestApp.Models
 {
-	public class Action
+	public class AuthorizeController
 	{
-
-
+		public AuthorizeController()
+		{
+			this.Actions = new List<AuthorizeAction>();
+		}
 		[Key]
 		public Guid Id { get; set; }
 
 		[MaxLength(50)]
 		public string Name { get; set; }
-		
 		[MaxLength(50)]
 		public string Title { get; set; }
 
+		public AuthorizeArea Area { get; set; }
+
+		public Guid? AreaId { get; set; }
+
+		public IList<AuthorizeAction> Actions { get; set; }
 	}
 }

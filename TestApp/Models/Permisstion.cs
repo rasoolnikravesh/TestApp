@@ -9,23 +9,22 @@ namespace TestApp.Models
 {
 	public class Permisstion
 	{
+		public Permisstion()
+		{
+			this.AppRolePermisstions = new List<AppRolePermisstions>();
+		}
 		public Guid Id { get; set; }
 
 		public string Name { get; set; }
 
 		public string Title { get; set; }
-
-		public Guid AreaId { get; set; }
-		public Area Area { get; set; }
-
-		public Guid ControllerId { get; set; }
-		public Controller Controller { get; set; }
-
-		public Guid ActionId { get; set; }
-		public Action Action { get; set; }
-
 		public PermisstionLevel Level { get; set; }
 
+
+		public Guid ActionId { get; set; }
+		public AuthorizeAction Action { get; set; }
+
+		public IList<AppRolePermisstions> AppRolePermisstions { get; set; }
 	}
 
 	public enum PermisstionLevel

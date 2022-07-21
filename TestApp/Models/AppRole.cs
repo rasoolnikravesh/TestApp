@@ -9,6 +9,10 @@ namespace TestApp.Models
 {
 	public class AppRole : IdentityRole<Guid>
 	{
-
+		public AppRole()
+		{
+			AppRolePermisstions = new List<AppRolePermisstions>();
+		}
+		public IList<AppRolePermisstions> AppRolePermisstions { get; set; }
 	}
 }

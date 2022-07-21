@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace TestApp.Models
 {
-	public class Area
+	public class AuthorizeAction
 	{
+
+
 		[Key]
 		public Guid Id { get; set; }
 
@@ -17,5 +19,11 @@ namespace TestApp.Models
 
 		[MaxLength(50)]
 		public string Title { get; set; }
+
+		public AuthorizeController Controller { get; set; }
+
+		public Guid ControlerId { get; set; }
+
+		public Permisstion Permisstion { get; set; }
 	}
 }

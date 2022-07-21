@@ -1,4 +1,4 @@
-﻿@model TestApp.Models.Permisstion
+﻿@model TestApp.Models.AuthorizeController
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Permisstion</h4>
+    <h4>AuthorizeController</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -27,24 +27,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Area.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Controller)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Controller.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Action)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Action.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Level)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Level)
         </dd>
     </dl>
 </div>

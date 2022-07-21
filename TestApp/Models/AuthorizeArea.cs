@@ -7,15 +7,23 @@ using System.Threading.Tasks;
 
 namespace TestApp.Models
 {
-	public class Controller
+
+	public class AuthorizeArea
 	{
+
+		public AuthorizeArea()
+		{
+			this.Controllers = new List<AuthorizeController>();
+		}
 		[Key]
 		public Guid Id { get; set; }
 
 		[MaxLength(50)]
 		public string Name { get; set; }
+
 		[MaxLength(50)]
 		public string Title { get; set; }
 
+		public IList<AuthorizeController> Controllers { get; set; }
 	}
 }
