@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\" />
+    <Folder Include="Areas\Authorize\Data\" />
+    <Folder Include="Areas\Authorize\Models\" />
   </ItemGroup>
 
 </Project>

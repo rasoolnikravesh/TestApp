@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace TestApp.Models
 {
-	public class AuthorizeAction
+	public class AuthorizeAction : Base.Entity
 	{
-
-
-		[Key]
-		public Guid Id { get; set; }
 
 		[MaxLength(50)]
 		public string Name { get; set; }
@@ -22,8 +18,8 @@ namespace TestApp.Models
 
 		public AuthorizeController Controller { get; set; }
 
-		public Guid ControlerId { get; set; }
+		public Guid ControllerId { get; set; }
 
-		public Permisstion Permisstion { get; set; }
+		public ActionPermission Permission { get; set; }
 	}
 }

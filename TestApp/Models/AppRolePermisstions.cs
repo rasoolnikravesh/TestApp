@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace TestApp.Models
 {
-	public class AppRolePermisstions
+	public class AppRolePermissions
 	{
-		public Guid PermisstionId { get; set; }
-		public Permisstion Permisstion { get; set; }
+		public Guid PermissionId { get; set; }
+		public Permission Permission { get; set; }
 
 		public Guid AppRoleId { get; set; }
 		public AppRole AppRole { get; set; }

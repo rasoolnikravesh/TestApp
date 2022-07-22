@@ -9,145 +9,149 @@ using TestApp.Models;
 
 namespace TestApp.Controllers
 {
-    public class AuthorizeAreasController : Controller
-    {
-        private readonly DataContext _context;
+	public class AuthorizeAreasController : Controller
+	{
+		private readonly DataContext _context;
 
-        public AuthorizeAreasController(DataContext context)
-        {
-            _context = context;
-        }
+		public AuthorizeAreasController(DataContext context)
+		{
+			_context = context;
+		}
 
-        // GET: AuthorizeAreas
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Areas.ToListAsync());
-        }
+		// GET: AuthorizeAreas
+		public async Task<IActionResult> Index()
+		{
+			return View(await _context.Areas.ToListAsync());
+		}
 
-        // GET: AuthorizeAreas/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		// GET: AuthorizeAreas/Details/5
+		public async Task<IActionResult> Details(Guid? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            var authorizeArea = await _context.Areas
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (authorizeArea == null)
-            {
-                return NotFound();
-            }
+			var authorizeArea = await _context.Areas
+				.FirstOrDefaultAsync(m => m.Id == id);
+			if (authorizeArea == null)
+			{
+				return NotFound();
+			}
 
-            return View(authorizeArea);
-        }
+			return View(authorizeArea);
+		}
 
-        // GET: AuthorizeAreas/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+		// GET: AuthorizeAreas/Create
+		public IActionResult Create()
+		{
+			return View();
+		}
 
-        // POST: AuthorizeAreas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Title")] AuthorizeArea authorizeArea)
-        {
-            if (ModelState.IsValid)
-            {
-                authorizeArea.Id = Guid.NewGuid();
-                _context.Add(authorizeArea);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(authorizeArea);
-        }
+		// POST: AuthorizeAreas/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create([Bind("Id,Name,Title")] AuthorizeArea authorizeArea)
+		{
+			if (!ModelState.IsValid) return View(authorizeArea);
+			authorizeArea.Id = Guid.NewGuid();
+			// ReSharper disable once SpecifyStringComparison
+			bool hasAny = _context.Areas.Any(x => x.Name.ToLower() == authorizeArea.Name.ToLower());
+			if (hasAny) return RedirectToAction(nameof(Index));
+			_context.Add(authorizeArea);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
 
-        // GET: AuthorizeAreas/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		// GET: AuthorizeAreas/Edit/5
+		public async Task<IActionResult> Edit(Guid? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            var authorizeArea = await _context.Areas.FindAsync(id);
-            if (authorizeArea == null)
-            {
-                return NotFound();
-            }
-            return View(authorizeArea);
-        }
+			AuthorizeArea authorizeArea = await _context.Areas.FindAsync(id);
+			if (authorizeArea == null)
+			{
+				return NotFound();
+			}
+			return View(authorizeArea);
+		}
 
-        // POST: AuthorizeAreas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Title")] AuthorizeArea authorizeArea)
-        {
-            if (id != authorizeArea.Id)
-            {
-                return NotFound();
-            }
+		// POST: AuthorizeAreas/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Title")] AuthorizeArea authorizeArea)
+		{
+			if (id != authorizeArea.Id)
+			{
+				return NotFound();
+			}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(authorizeArea);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AuthorizeAreaExists(authorizeArea.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(authorizeArea);
-        }
+			if (ModelState.IsValid)
+			{
+				try
+				{
 
-        // GET: AuthorizeAreas/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+					// ReSharper disable once SpecifyStringComparison
+					bool hasAny = _context.Areas.Any(x => x.Name.ToLower() == authorizeArea.Name.ToLower());
+					if (hasAny) return RedirectToAction(nameof(Index));
+					_context.Update(authorizeArea);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!AuthorizeAreaExists(authorizeArea.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(Index));
+			}
+			return View(authorizeArea);
+		}
 
-            var authorizeArea = await _context.Areas
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (authorizeArea == null)
-            {
-                return NotFound();
-            }
+		// GET: AuthorizeAreas/Delete/5
+		public async Task<IActionResult> Delete(Guid? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            return View(authorizeArea);
-        }
+			var authorizeArea = await _context.Areas
+				.FirstOrDefaultAsync(m => m.Id == id);
+			if (authorizeArea == null)
+			{
+				return NotFound();
+			}
 
-        // POST: AuthorizeAreas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var authorizeArea = await _context.Areas.FindAsync(id);
-            _context.Areas.Remove(authorizeArea);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+			return View(authorizeArea);
+		}
 
-        private bool AuthorizeAreaExists(Guid id)
-        {
-            return _context.Areas.Any(e => e.Id == id);
-        }
-    }
+		// POST: AuthorizeAreas/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(Guid id)
+		{
+			var authorizeArea = await _context.Areas.FindAsync(id);
+			_context.Areas.Remove(authorizeArea);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
+
+		private bool AuthorizeAreaExists(Guid id)
+		{
+			return _context.Areas.Any(e => e.Id == id);
+		}
+	}
 }

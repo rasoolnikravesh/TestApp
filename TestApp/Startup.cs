@@ -57,14 +57,27 @@ namespace TestApp
 			app.UseRouting();
 
 			app.UseAuthorization();
-			app.UseAblyAutrize();
+			app.UseAblyAuthorize();
 
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapAreaControllerRoute(
+					name: "Authorize",
+					areaName: "Authorize",
+					pattern: "Authorize/{controller=Home}/{action=Index}/{id?}"
+				);
+
+				endpoints.MapControllerRoute(
+					name: "areaRoute",
+					pattern: "{area:exists}/{controller}/{action}"
+				);
+
 				endpoints.MapControllerRoute(
 					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
+					pattern: "{controller=Home}/{action=Index}/{id?}"
+				);
 			});
+
 		}
 	}
 }

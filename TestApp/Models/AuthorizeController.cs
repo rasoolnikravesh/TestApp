@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace TestApp.Models
 {
-	public class AuthorizeController
+	public class AuthorizeController : Base.Entity
 	{
 		public AuthorizeController()
 		{
 			this.Actions = new List<AuthorizeAction>();
 		}
-		[Key]
-		public Guid Id { get; set; }
 
 		[MaxLength(50)]
 		public string Name { get; set; }
@@ -26,5 +24,7 @@ namespace TestApp.Models
 		public Guid? AreaId { get; set; }
 
 		public IList<AuthorizeAction> Actions { get; set; }
+
+		public ControllerPermission Permission { get; set; }
 	}
 }
